@@ -26,7 +26,7 @@ fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${l
     document.getElementById('wind').textContent = `${mph} mph / ${kmh} km/h`;
 
     // Wind direction
-    const arrow = document.querySelector('#wind-direction img');
+    const arrow = document.getElementById('wind-arrow');
     arrow.style.transform = `rotate(${weather.winddirection}deg)`;
 
     // Weather icon selection
@@ -48,22 +48,38 @@ fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${l
     console.error("Weather error:", err);
   });
 
-// --- Moon Phase: WeatherAPI ---
+// --- Moon Phase + Sunrise/Sunset: WeatherAPI ---
 const weatherApiKey = "92d5ca8a8ff247aa805142432251804";
 
 fetch(`https://api.weatherapi.com/v1/astronomy.json?key=${weatherApiKey}&q=Cornwall&dt=today`)
   .then(res => res.json())
   .then(data => {
-    const phaseName = data.astronomy?.astro?.moon_phase;
-    if (phaseName) {
-      const phaseFile = phaseName.toLowerCase().replace(/\s+/g, "-");
-      document.getElementById('moon-content').textContent = phaseName;
+    const astro = data.astronomy?.astro;
+
+    // Moon phase
+    if (astro?.moon_phase) {
+      const phaseFile = astro.moon_phase.toLowerCase().replace(/\s+/g, "-");
+      document.getElementById('moon-content').textContent = astro.moon_phase;
       document.getElementById('moon-icon').src = `svg/moon/${phaseFile}.svg`;
     }
+
+    // Sunrise / Sunset
+    if (astro?.sunrise) {
+      document.getElementById('sunrise').textContent = astro.sunrise;
+    }
+    if (astro?.sunset) {
+      document.getElementById('sunset').textContent = astro.sunset;
+    }
+
+    // Optional: set icon paths if using <img id="sunrise-icon"> etc.
+    // document.getElementById('sunrise-icon').src = 'svg/sunset/sunrise.svg';
+    // document.getElementById('sunset-icon').src = 'svg/sunset/sunset.svg';
   })
   .catch(err => {
-    document.getElementById('moon-content').textContent = "Moon phase unavailable.";
-    console.error("Moon phase error:", err);
+    document.getElementById('moon-content').textContent = "Moon data unavailable.";
+    document.getElementById('sunrise').textContent = "--:--";
+    document.getElementById('sunset').textContent = "--:--";
+    console.error("Astronomy fetch error:", err);
   });
 
 // --- Tides: Storm Glass + Wave Chart ---
