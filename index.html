@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cornwall Weather, Tides & Moon</title>
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/logo.svg" alt="Logo" class="logo" />
+      <h1>Cornwall Weather, Tides & Moon</h1>
+    </header>
+
+    <section id="weather" class="card">
+      <h2>Weather</h2>
+      <div class="card-content">
+        <img id="weather-icon" src="svg/weather/clear-day.svg" alt="Weather icon" />
+        <div class="weather-data">
+          <div id="temperature"></div>
+          <div class="thermometer-wrapper">
+            <svg id="thermometer" viewBox="0 0 20 100" width="20">
+              <rect x="8" y="10" width="4" height="80" fill="#ddd" />
+              <rect id="thermo-fill" x="8" y="90" width="4" height="0" fill="#FD9803" />
+            </svg>
+          </div>
+          <div id="wind"></div>
+          <div id="wind-direction" class="wind-arrow-wrapper">
+            <img src="svg/wind-arrow/wind-arrow.svg" alt="Wind direction arrow" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tides" class="card">
+      <h2>Tide Times</h2>
+      <div class="card-content">
+        <div id="tide-content"></div>
+        <svg id="tide-chart" viewBox="0 0 200 100" width="200">
+          <!-- Bars injected by JS -->
+        </svg>
+      </div>
+    </section>
+
+    <section id="moon" class="card">
+      <h2>Moon Phase</h2>
+      <div class="card-content">
+        <img id="moon-icon" src="svg/moon/full-moon.svg" alt="Moon icon" />
+        <div id="moon-content"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
